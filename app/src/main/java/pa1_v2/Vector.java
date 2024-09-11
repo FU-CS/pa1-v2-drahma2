@@ -27,7 +27,7 @@ public class Vector {
      * @return The number of dimensions.
      */
     public int getDimension() {
-
+        return this.n;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Vector {
      * @return The element at the specified index.
      */
     public int read(int index) {
-
+        return this.data[index];
     }
 
     /**
@@ -45,7 +45,7 @@ public class Vector {
      * @param value
      */
     public void update(int index, int value) {
-
+        this.data[index] = value;
     }
 
     /**
@@ -53,7 +53,12 @@ public class Vector {
      * @param index The index of the element to remove.
      */
     public void delete(int index) {
-
+        
+        for (int i=index; i<n-1; i++){
+            this.data[i] = this.data[i+1];
+        }
+        this.data[n-1] = -1;
+        
     }
 
     /**
@@ -62,7 +67,11 @@ public class Vector {
      * @param v The vector to add.
      */
     public void add(Vector v) {
-
+        for (int i = 0; i < n; i++){
+            this.data[i] += v.data[i];
+        }
+        
+        
     }
 
     /**
@@ -70,7 +79,10 @@ public class Vector {
      * @param v
      */
     public void subtract(Vector v) {
-
+        for (int i = 0; i < n; i++){
+            this.data[i] -= v.data[i];
+        }
+        
     }
 
     /**
@@ -78,7 +90,14 @@ public class Vector {
      * @return The maximum element.
      */
     public int max() {
-
+        int max_val;
+        max_val = this.data[0];
+        for (int i = 0; i < n; i++) {
+            if (this.data[i] > max_val) {
+                max_val = this.data[i];
+            }
+        }
+        return max_val;
     }
 
     /**
@@ -86,7 +105,14 @@ public class Vector {
      * @return The minimum element.
      */
     public int min() {
-
+        int min_val;
+        min_val = this.data[0];
+        for (int i = 0; i < n; i++) {
+            if (this.data[i] < min_val) {
+                min_val = this.data[i];
+            }
+        }
+        return min_val;
     }
 
     /**
@@ -94,7 +120,14 @@ public class Vector {
      * @return The average of all elements.
      */
     public double average() {
+        int averg; 
+        averg = 0;
+        for (int i = 0; i < n; i++){
+            averg += this.data[i];
         
+        }
+        averg = averg/n;
+        return averg;
     }
 
     /**
@@ -103,7 +136,14 @@ public class Vector {
      * @return The index of the first occurrence of the value, or -1 if not found.
      */
     public int search(int value) {
-        
+        int search_index;
+        search_index = -1;
+        for (int i = 0; i < n; i++){
+            if (this.data[i] == value){
+                search_index = i;
+            }
+        }
+        return search_index;
     }
 
     /**
@@ -113,6 +153,26 @@ public class Vector {
      * @return The index of the first occurrence of the value, or -1 if not found.
      */
     public int searchFast(int value) {
+        int upper = this.n-1;
+        int lower = 0;
+        int mid;
+        
+        while (lower <= upper){
+            mid = Math.round((lower + upper)/2);
+            if (data[mid] == value){
+                return mid;
+            }
+            else if (data[mid] < value){
+                lower = mid + 1;
+            }
+            else if (data[mid] > value){
+                upper = mid + 1;
+            }
+            
+        }
+        return -1;
+
+        
 
     }
 
@@ -120,7 +180,15 @@ public class Vector {
      * Sort the elements of the vector in ascending order.
      */
     public void sort() {
-
+        for (int i =0; i < n - 1; i++){
+            for (int j = 0; j < n - 1; j++){
+                if (data[j] > data[j+1]){
+                    int temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
     }
     
 }
